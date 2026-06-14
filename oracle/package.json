@@ -1,0 +1,23 @@
+{
+  "name": "@levee/oracle",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Switchboard On-Demand custom feed (pulls Levee /risk) + push scripts.",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "create-feed": "ts-node src/createFeed.ts",
+    "push": "ts-node src/push.ts"
+  },
+  "dependencies": {
+    "@coral-xyz/anchor": "^0.30.1",
+    "@solana/web3.js": "^1.95.2",
+    "@switchboard-xyz/common": "^3.0.0",
+    "@switchboard-xyz/on-demand": "^1.2.40",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.0"
+  }
+}
