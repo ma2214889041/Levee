@@ -157,15 +157,33 @@ npm install && npm -w @levee/oracle run typecheck \
 
 ---
 
+## Grid early warning (Terna use case)
+
+Beyond relief, Levee maps risk onto **National-Transmission-Grid assets** (towers,
+substations, line spans) and raises **multi-tier early warnings**
+(WATCH / WARNING / CRITICAL) for operators — CRITICAL is the same band that arms
+the on-chain payout. The model exposes `GET /risk` (now with `alert_level`,
+`grid_exposure_score`, `affected_assets`) and `GET /alerts` (grid-operator view),
+plus an optional `ALERT_WEBHOOK_URL` push. Full methodology + data assumptions:
+[`docs/DATA.md`](docs/DATA.md).
+
+## Docs
+
+- [`docs/DATA.md`](docs/DATA.md) — data, model & early-warning methodology (Terna).
+- [`SECURITY.md`](SECURITY.md) — trust model, on-chain invariants, threat model.
+- Per-module `README.md` in each folder.
+
 ## Security & limitations (devnet)
 
 - **One oracle = single point of failure.** Production must require agreement
-  across **multiple independent oracles** before any payout (see `oracle/README.md`).
+  across **multiple independent oracles** before any payout (see `SECURITY.md`).
 - The model trains on a **synthetic, physically-motivated** catalogue; swap in a
   curated historical landslide dataset for real use.
 - `MockOracle` / `set_mock_oracle` exist for tests — delete them for a hardened deploy.
 - All secrets live in `.env` (never committed). The program id in `declare_id!`
   is a placeholder — run `anchor keys sync` after the first build.
+- Optional **Sentry** monitoring (model + agent + frontend) activates only when
+  `SENTRY_DSN` is set.
 
 ## License
 
