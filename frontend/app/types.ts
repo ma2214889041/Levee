@@ -10,11 +10,22 @@ export interface RegionDef {
   cooldown_seconds: number;
   static_susceptibility: number;
 }
+export interface AffectedAsset {
+  id: string;
+  name: string;
+  type: string;
+  voltage_kv?: number;
+  criticality: number;
+  asset_risk: number;
+}
 export interface Risk {
   risk_score: number;
   risk_bps: number;
   threshold_bps: number;
   would_trigger: boolean;
+  alert_level: "NORMAL" | "WATCH" | "WARNING" | "CRITICAL";
+  grid_exposure_score: number;
+  affected_assets: AffectedAsset[];
   contributing_factors: { name: string; label: string; value: number; contribution: number }[];
   model: string;
   timestamp: number;

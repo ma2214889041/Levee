@@ -79,7 +79,10 @@ export default function RegionCard({ s, scale }: { s: RegionState; scale: number
     <div className="card">
       <div className="row">
         <h2>{def.name}</h2>
-        <span className={`status ${status}`}>{label}</span>
+        <div style={{ display: "flex", gap: 6 }}>
+          {risk && <span className={`alert ${risk.alert_level}`}>{risk.alert_level}</span>}
+          <span className={`status ${status}`}>{label}</span>
+        </div>
       </div>
       <p className="desc">{def.description}</p>
 
@@ -143,6 +146,33 @@ export default function RegionCard({ s, scale }: { s: RegionState; scale: number
           </div>
         </div>
       </div>
+
+      {risk && risk.affected_assets.length > 0 && (
+        <div className="assets">
+          <div className="k" style={{ color: "var(--muted)", fontSize: 12, marginBottom: 4 }}>
+            Exposed transmission assets (risk = P × criticality)
+          </div>
+          {risk.affected_assets.map((a) => (
+            <div className="asset" key={a.id}>
+              <span className="aname">
+                {a.name}
+                {a.voltage_kv ? ` · ${a.voltage_kv}kV` : ""}
+              </span>
+              <span className="abar-wrap">
+                <span
+                  className="abar"
+                  style={{
+                    width: `${Math.min(a.asset_risk * 100, 100)}%`,
+                    background:
+                      a.asset_risk >= 0.7 ? "var(--red)" : a.asset_risk >= 0.4 ? "var(--amber)" : "var(--green)",
+                  }}
+                />
+              </span>
+              <span className="aval">{(a.asset_risk * 100).toFixed(0)}%</span>
+            </div>
+          ))}
+        </div>
+      )}
 
       {!onchain && (
         <p className="warn">⚠ Region not found on-chain (program not deployed / region not initialized). Showing config defaults + live model risk.</p>
