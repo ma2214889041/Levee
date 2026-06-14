@@ -80,3 +80,61 @@ td.amt { text-align: right; font-family: ui-monospace, monospace; }
 .asset .abar-wrap { flex: 1; height: 7px; background: var(--panel-2); border-radius: 4px; overflow: hidden; }
 .asset .abar { display: block; height: 100%; border-radius: 4px; }
 .asset .aval { width: 36px; text-align: right; color: var(--muted); font-family: ui-monospace, monospace; }
+
+/* ============================ landing page ============================ */
+.landing { max-width: 1080px; margin: 0 auto; padding: 0 20px 40px; }
+.lp-nav { display: flex; align-items: center; justify-content: space-between; padding: 22px 0; }
+.lp-logo { font-size: 20px; font-weight: 700; }
+.lp-nav nav { display: flex; align-items: center; gap: 22px; }
+.lp-nav nav a { color: var(--muted); text-decoration: none; font-size: 14px; }
+.lp-nav nav a:hover { color: var(--text); }
+.lp-cta-sm { background: var(--blue); color: #06122a !important; padding: 8px 14px; border-radius: 10px; font-weight: 700; }
+
+.lp-hero { text-align: center; padding: 60px 0 40px; position: relative; }
+.lp-hero::after { content: ""; position: absolute; inset: -40px 10% auto 10%; height: 360px;
+  background: radial-gradient(60% 60% at 50% 0%, rgba(78,161,255,.20), transparent 70%); z-index: -1; }
+.lp-kicker { display: inline-block; font-size: 12px; letter-spacing: 1px; text-transform: uppercase;
+  color: var(--blue); border: 1px solid var(--border); padding: 5px 12px; border-radius: 999px; }
+.lp-hero h1 { font-size: 52px; line-height: 1.05; letter-spacing: -1.5px; margin: 22px auto 0; max-width: 880px; }
+.grad { background: linear-gradient(90deg, #4ea1ff, #2ecc71); -webkit-background-clip: text;
+  background-clip: text; color: transparent; }
+.lp-sub { color: var(--muted); font-size: 18px; line-height: 1.6; max-width: 720px; margin: 22px auto 0; }
+.lp-sub strong { color: var(--text); }
+.lp-actions { display: flex; gap: 14px; justify-content: center; margin: 30px 0 10px; flex-wrap: wrap; }
+.lp-cta { background: var(--blue); color: #06122a; padding: 13px 24px; border-radius: 12px; font-weight: 700;
+  text-decoration: none; font-size: 16px; }
+.lp-cta:hover { filter: brightness(1.08); }
+.lp-ghost { padding: 13px 22px; border-radius: 12px; border: 1px solid var(--border); color: var(--text);
+  text-decoration: none; font-size: 16px; }
+.lp-stats { display: flex; gap: 40px; justify-content: center; margin-top: 38px; flex-wrap: wrap; }
+.lp-stats div { display: flex; flex-direction: column; }
+.lp-stats b { font-size: 26px; }
+.lp-stats span { color: var(--muted); font-size: 13px; }
+
+.lp-band { background: var(--panel); border: 1px solid var(--border); border-radius: 16px;
+  padding: 22px 26px; margin: 24px 0; }
+.lp-band p { margin: 0; line-height: 1.65; color: var(--text); font-size: 16px; }
+.lp-band b { color: var(--blue); }
+
+.lp-section { padding: 44px 0 8px; }
+.lp-section h2 { font-size: 30px; letter-spacing: -0.5px; margin: 0; }
+.lp-lead { color: var(--muted); margin: 8px 0 24px; }
+.lp-flow { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+.lp-step { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 18px; }
+.lp-step-k { color: var(--blue); font-size: 12px; font-weight: 700; letter-spacing: .5px; }
+.lp-step h3 { margin: 8px 0 6px; font-size: 18px; }
+.lp-step p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.55; }
+.lp-pillars { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 8px; }
+.lp-pillar { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+.lp-pillar h3 { margin: 0 0 8px; font-size: 18px; }
+.lp-pillar p { margin: 0; color: var(--muted); line-height: 1.6; font-size: 14px; }
+.lp-stack { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+.lp-stack .chip { background: var(--panel-2); border: 1px solid var(--border); color: var(--text);
+  padding: 7px 13px; border-radius: 999px; font-size: 13px; }
+.lp-final { text-align: center; background: var(--panel); border: 1px solid var(--border);
+  border-radius: 20px; padding: 48px 24px; margin: 44px 0 24px; }
+.lp-final h2 { font-size: 34px; margin: 0 0 8px; letter-spacing: -0.5px; }
+.lp-final p { color: var(--muted); margin: 0 0 24px; font-size: 16px; }
+.lp-foot { text-align: center; color: var(--muted); font-size: 13px; padding: 24px 0; }
+
+@media (max-width: 640px) { .lp-hero h1 { font-size: 36px; } }

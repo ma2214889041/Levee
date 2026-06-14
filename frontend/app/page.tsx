@@ -1,102 +1,107 @@
-"use client";
+import Link from "next/link";
 
-import { useEffect, useState } from "react";
-import { DashboardState } from "./types";
-import RegionCard from "./components/RegionCard";
+const FLOWS = [
+  { k: "1 · Sense", t: "Risk model", d: "Calibrated LightGBM turns rainfall, soil saturation and terrain into a landslide probability with explainable factors." },
+  { k: "2 · Attest", t: "Oracle", d: "A Switchboard On-Demand feed carries the probability on-chain, with staleness and sample guards." },
+  { k: "3 · Decide", t: "Solana program", d: "An immutable, on-chain threshold — not an LLM — authorizes relief. Cap & cooldown enforced; every decision logged." },
+  { k: "4 · Act", t: "Autonomous agent", d: "Pays USDC only to registered community wallets, with human-in-the-loop for large amounts. Fails closed on stale data." },
+];
 
-export default function Home() {
-  const [state, setState] = useState<DashboardState | null>(null);
-  const [err, setErr] = useState<string | null>(null);
+const PILLARS = [
+  { t: "Early warning for the grid", d: "Maps risk onto National-Transmission-Grid assets (towers, substations, lines) and raises WATCH / WARNING / CRITICAL alerts before damage." },
+  { t: "Trust by construction", d: "The payout rule is on-chain and public. Anyone can re-compute it. No discretionary human in the money path, no black-box model deciding funds." },
+  { t: "Relief at machine speed", d: "When the on-chain threshold is crossed, pre-funded USDC reaches affected communities in one transaction — no claims, no committees." },
+];
 
-  async function load() {
-    try {
-      const res = await fetch("/api/state", { cache: "no-store" });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      setState(await res.json());
-      setErr(null);
-    } catch (e) {
-      setErr((e as Error).message);
-    }
-  }
-
-  useEffect(() => {
-    load();
-    const t = setInterval(load, 15000);
-    return () => clearInterval(t);
-  }, []);
-
+export default function Landing() {
   return (
-    <div className="container">
-      <div className="header">
-        <h1>🌊 Levee</h1>
-        <span className="tag">Solana · devnet</span>
-        <span className="tag">autonomous AI relief agent</span>
-      </div>
-      <p className="subtitle">
-        Levee monitors landslide risk in real time. When risk crosses a threshold
-        committed on-chain, an autonomous agent disburses USDC relief to registered
-        community wallets — every decision and payout written on-chain and publicly
-        auditable.
-      </p>
+    <div className="landing">
+      <header className="lp-nav">
+        <span className="lp-logo">🌊 Levee</span>
+        <nav>
+          <a href="#how">How it works</a>
+          <a href="#why">Why</a>
+          <a href="https://github.com/ma2214889041/Levee" target="_blank" rel="noreferrer">GitHub</a>
+          <Link href="/dashboard" className="lp-cta-sm">Launch dashboard →</Link>
+        </nav>
+      </header>
 
-      <div className="bar">
-        <div className="stat">
-          <div className="label">Vault balance</div>
-          <div className="value">
-            {state?.vaultBalanceUsdc != null
-              ? `${state.vaultBalanceUsdc.toLocaleString()} USDC`
-              : "—"}
-          </div>
+      <section className="lp-hero">
+        <span className="lp-kicker">AI × Web3 · Solana · autonomous agent</span>
+        <h1>
+          Disaster relief that <span className="grad">decides, pays, and proves</span> itself.
+        </h1>
+        <p className="lp-sub">
+          Levee is an autonomous agent on Solana that watches landslide risk in real
+          time. When risk crosses a threshold <strong>committed on-chain</strong>, it
+          releases USDC relief to registered communities — every decision and every
+          payout public and auditable. The brain is a calibrated risk model and
+          on-chain rules, never a discretionary human or a black box.
+        </p>
+        <div className="lp-actions">
+          <Link href="/dashboard" className="lp-cta">Launch live dashboard</Link>
+          <a className="lp-ghost" href="#how">See how it works</a>
         </div>
-        <div className="stat">
-          <div className="label">Monitored regions</div>
-          <div className="value">{state?.regions.length ?? "—"}</div>
+        <div className="lp-stats">
+          <div><b>4</b><span>on-chain safety invariants</span></div>
+          <div><b>3-tier</b><span>early warning</span></div>
+          <div><b>100%</b><span>auditable payouts</span></div>
         </div>
-        <div className="stat">
-          <div className="label">Program</div>
-          <div className="value mono" style={{ fontSize: 13 }}>
-            {state ? `${state.programId.slice(0, 4)}…${state.programId.slice(-4)}` : "—"}
-          </div>
+      </section>
+
+      <section className="lp-band">
+        <p>
+          <b>The problem.</b> Heavy rain on fragile slopes — like the 1998 Sarno
+          (Campania) debris flows — destroys homes and critical infrastructure in
+          minutes. Relief arrives in weeks, through opaque channels. Risk models exist,
+          but the path from a forecast to money on the ground is slow and untrusted.
+        </p>
+      </section>
+
+      <section id="how" className="lp-section">
+        <h2>How it works</h2>
+        <p className="lp-lead">Four stages, each independently verifiable.</p>
+        <div className="lp-flow">
+          {FLOWS.map((f) => (
+            <div className="lp-step" key={f.k}>
+              <span className="lp-step-k">{f.k}</span>
+              <h3>{f.t}</h3>
+              <p>{f.d}</p>
+            </div>
+          ))}
         </div>
-        <div className="stat">
-          <div className="label">Last update</div>
-          <div className="value mono" style={{ fontSize: 13 }}>
-            {state ? new Date(state.generatedAt * 1000).toLocaleTimeString() : "—"}
-          </div>
+      </section>
+
+      <section id="why" className="lp-section">
+        <h2>Why it matters</h2>
+        <div className="lp-pillars">
+          {PILLARS.map((p) => (
+            <div className="lp-pillar" key={p.t}>
+              <h3>{p.t}</h3>
+              <p>{p.d}</p>
+            </div>
+          ))}
         </div>
-      </div>
+      </section>
 
-      {err && <p className="warn">Failed to load /api/state: {err}</p>}
+      <section className="lp-section">
+        <h2>Built on</h2>
+        <div className="lp-stack">
+          {["Solana", "Anchor / Rust", "Solana Agent Kit V2", "Switchboard On-Demand", "USDC", "Privy", "LightGBM", "FastAPI", "Next.js"].map((s) => (
+            <span className="chip" key={s}>{s}</span>
+          ))}
+        </div>
+      </section>
 
-      {(() => {
-        const actionable = (state?.regions ?? []).filter(
-          (r) => r.risk && (r.risk.alert_level === "WARNING" || r.risk.alert_level === "CRITICAL")
-        );
-        if (actionable.length === 0) return null;
-        const worst = actionable.some((r) => r.risk!.alert_level === "CRITICAL")
-          ? "CRITICAL"
-          : "WARNING";
-        return (
-          <div className={`banner ${worst}`}>
-            <strong>⚠ Early warning ({worst}):</strong>{" "}
-            {actionable
-              .map((r) => `${r.def.name} — ${r.risk!.alert_level} (${(r.risk!.risk_score * 100).toFixed(0)}%)`)
-              .join(" · ")}
-          </div>
-        );
-      })()}
+      <section className="lp-final">
+        <h2>Ship the shift.</h2>
+        <p>Autonomous, bounded, transparent relief — built for the next decade of AI × Web3.</p>
+        <Link href="/dashboard" className="lp-cta">Open the dashboard</Link>
+      </section>
 
-      <div className="grid">
-        {state?.regions.map((r) => (
-          <RegionCard key={r.def.region_id} s={r} scale={state.riskScale} />
-        ))}
-      </div>
-
-      <p className="footer">
-        Risk from the Levee model API · policy &amp; payouts from the Levee Solana
-        program · refreshes every 15s. Hard rule: only the on-chain threshold can
-        authorize a payout — stale or missing data never triggers one.
-      </p>
+      <footer className="lp-foot">
+        Levee · autonomous landslide-relief agent on Solana (devnet) · for ctrl/shift Hackathon 2026
+      </footer>
     </div>
   );
 }
