@@ -40,6 +40,16 @@ The UI only talks to `PrivacyPoolAdapter` (`src/privacy/adapter.ts`):
 > not be installed/inspected here. The mock ships a working demo; swapping in the
 > real SDK is a localized change once a valid token is available.
 
+## Design
+
+The UI implements the Levee **Web3 Concept** design direction (from the project
+design handoff): an immersive deep-space canvas with a generative topographic
+contour field (`src/topo.ts`, marching squares — the "monitored hillside"
+signature), aurora glow, glassmorphism cards, cyan→violet Solana gradients, and
+amber reserved exclusively for "aid delivered" / disbursement events. Type is
+**Sora** (UI) + **JetBrains Mono** (amounts, addresses, signatures). The visual
+layer is purely presentational — the UI still only talks to `PrivacyPoolAdapter`.
+
 ## Run
 
 ```bash
