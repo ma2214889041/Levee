@@ -1,0 +1,27 @@
+{
+  "name": "@levee/agent",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Levee autonomous agent (Solana Agent Kit V2 + Privy embedded wallet).",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "start": "ts-node src/index.ts",
+    "once": "ts-node src/index.ts --once"
+  },
+  "dependencies": {
+    "@coral-xyz/anchor": "^0.30.1",
+    "@privy-io/server-auth": "^1.32.5",
+    "@solana/spl-token": "^0.4.13",
+    "@solana/web3.js": "^1.98.2",
+    "@switchboard-xyz/common": "^3.5.0",
+    "@switchboard-xyz/on-demand": "^1.2.67",
+    "bs58": "^6.0.0",
+    "dotenv": "^16.4.5",
+    "solana-agent-kit": "^2.0.10"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.0"
+  }
+}
