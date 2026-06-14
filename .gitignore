@@ -1,0 +1,42 @@
+# ---- Secrets / env ----
+.env
+.env.*
+!.env.example
+*.pem
+*-keypair.json
+wallet*.json
+id.json
+
+# ---- Node / TypeScript ----
+node_modules/
+dist/
+build/
+*.tsbuildinfo
+npm-debug.log*
+yarn-error.log*
+
+# ---- Rust / Anchor ----
+target/
+**/*.rs.bk
+.anchor/
+test-ledger/
+program/target/
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env.python
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+model/artifacts/*.pkl
+model/artifacts/*.txt
+!model/artifacts/.gitkeep
+
+# ---- Misc ----
+.DS_Store
+*.log
+.idea/
+.vscode/
