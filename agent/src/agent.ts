@@ -107,10 +107,13 @@ export async function evaluateRegion(ctx: AgentContext, regionId: number): Promi
   if (payoutTotal.gt(capRemaining)) reasons.push("cap exceeded");
   if (BigInt(payoutTotal.toString()) > vaultBalance) reasons.push("insufficient vault balance");
 
+  const topAsset = risk.affected_assets?.[0];
   console.log(
     `  risk=${risk.risk_score.toFixed(3)} (${risk.risk_bps}bps) ` +
-      `threshold=${region.thresholdBps}bps payout=${bnToUsdc(payoutTotal)} USDC ` +
-      `(${beneficiaries.length} ben) capRemaining=${bnToUsdc(capRemaining)} USDC`
+      `alert=${risk.alert_level ?? "n/a"} threshold=${region.thresholdBps}bps ` +
+      `payout=${bnToUsdc(payoutTotal)} USDC (${beneficiaries.length} ben) ` +
+      `capRemaining=${bnToUsdc(capRemaining)} USDC` +
+      (topAsset ? `\n  top grid asset at risk: ${topAsset.name} (${topAsset.asset_risk})` : "")
   );
 
   if (reasons.length > 0) {

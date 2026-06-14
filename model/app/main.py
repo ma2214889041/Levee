@@ -10,14 +10,17 @@ Endpoints
 """
 from __future__ import annotations
 
+import os
 import time
 
 from fastapi import FastAPI, HTTPException, Query
 
+from .alerts import alert_level, build_alert, notify_webhook, severity_rank
 from .features import Features
+from .grid import affected_assets, grid_exposure_score
 from .model import load_or_train
-from .regions import all_regions, region_by_id, risk_scale
-from .schemas import FeatureIngest, RiskResponse
+from .regions import all_regions, region_by_id, risk_scale, warning_levels
+from .schemas import AlertsResponse, FeatureIngest, RiskResponse
 from .store import FeatureStore
 
 app = FastAPI(title="Levee Risk API", version="0.1.0")
@@ -25,6 +28,7 @@ app = FastAPI(title="Levee Risk API", version="0.1.0")
 MODEL = load_or_train()
 STORE = FeatureStore()
 RISK_SCALE = risk_scale()
+ALERT_WEBHOOK_URL = os.environ.get("ALERT_WEBHOOK_URL", "").strip()
 
 
 @app.get("/health")
@@ -42,12 +46,17 @@ def _score(region: dict, feats: Features, ts: int) -> RiskResponse:
     p = MODEL.predict_proba(vec)
     risk_bps = int(round(p * RISK_SCALE))
     threshold_bps = int(region["threshold_bps"])
+    region_id = int(region["region_id"])
+    assets = affected_assets(region_id, p)
     return RiskResponse(
-        region_id=int(region["region_id"]),
+        region_id=region_id,
         risk_score=round(p, 4),
         risk_bps=risk_bps,
         threshold_bps=threshold_bps,
         would_trigger=risk_bps >= threshold_bps,
+        alert_level=alert_level(p),
+        grid_exposure_score=round(grid_exposure_score(region_id, p), 4),
+        affected_assets=assets,
         contributing_factors=MODEL.contributing_factors(vec),
         model=MODEL.kind,
         timestamp=ts,
@@ -85,4 +94,51 @@ def ingest(payload: FeatureIngest):
         static_susceptibility=float(region["static_susceptibility"]),
         ts=ts,
     )
-    return _score(region, feats, ts)
+    resp = _score(region, feats, ts)
+    # Early-warning output: push actionable alerts to an external webhook.
+    if ALERT_WEBHOOK_URL and resp.alert_level in ("WARNING", "CRITICAL"):
+        notify_webhook(
+            ALERT_WEBHOOK_URL,
+            build_alert(
+                resp.region_id,
+                str(region["name"]),
+                resp.risk_score,
+                resp.risk_bps,
+                [a.model_dump() for a in resp.affected_assets],
+                ts,
+            ),
+        )
+    return resp
+
+
+@app.get("/alerts", response_model=AlertsResponse)
+def alerts():
+    """Early-warning summary across all regions, sorted most-severe first.
+
+    This is the grid-operator view: which areas are in WATCH/WARNING/CRITICAL
+    right now and which transmission assets are most exposed.
+    """
+    items = []
+    for region in all_regions():
+        rid = int(region["region_id"])
+        try:
+            feats, ts = STORE.get(rid)
+        except KeyError:
+            continue
+        scored = _score(region, feats, ts)
+        items.append(
+            build_alert(
+                rid,
+                str(region["name"]),
+                scored.risk_score,
+                scored.risk_bps,
+                [a.model_dump() for a in scored.affected_assets],
+                ts,
+            )
+        )
+    items.sort(key=lambda a: (severity_rank(a["level"]), a["risk_score"]), reverse=True)
+    return AlertsResponse(
+        generated_at=int(time.time()),
+        warning_levels=warning_levels(),
+        alerts=items,
+    )
