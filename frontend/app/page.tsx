@@ -68,6 +68,24 @@ export default function Home() {
 
       {err && <p className="warn">Failed to load /api/state: {err}</p>}
 
+      {(() => {
+        const actionable = (state?.regions ?? []).filter(
+          (r) => r.risk && (r.risk.alert_level === "WARNING" || r.risk.alert_level === "CRITICAL")
+        );
+        if (actionable.length === 0) return null;
+        const worst = actionable.some((r) => r.risk!.alert_level === "CRITICAL")
+          ? "CRITICAL"
+          : "WARNING";
+        return (
+          <div className={`banner ${worst}`}>
+            <strong>⚠ Early warning ({worst}):</strong>{" "}
+            {actionable
+              .map((r) => `${r.def.name} — ${r.risk!.alert_level} (${(r.risk!.risk_score * 100).toFixed(0)}%)`)
+              .join(" · ")}
+          </div>
+        );
+      })()}
+
       <div className="grid">
         {state?.regions.map((r) => (
           <RegionCard key={r.def.region_id} s={r} scale={state.riskScale} />

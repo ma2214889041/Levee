@@ -61,3 +61,22 @@ td.amt { text-align: right; font-family: ui-monospace, monospace; }
 .pill.no { background: rgba(138,149,178,.15); color: var(--muted); }
 .footer { color: var(--muted); font-size: 12px; margin-top: 28px; }
 .warn { color: var(--amber); font-size: 12px; margin-top: 8px; }
+
+/* early-warning tiers */
+.alert { font-size: 11px; font-weight: 800; padding: 4px 9px; border-radius: 999px; letter-spacing: .4px; }
+.alert.NORMAL { background: rgba(46,204,113,.13); color: var(--green); }
+.alert.WATCH { background: rgba(78,161,255,.16); color: var(--blue); }
+.alert.WARNING { background: rgba(245,166,35,.18); color: var(--amber); }
+.alert.CRITICAL { background: rgba(255,92,92,.2); color: var(--red); }
+
+.banner { border-radius: 12px; padding: 12px 16px; margin-bottom: 18px; font-size: 14px;
+  border: 1px solid var(--border); }
+.banner.WARNING { background: rgba(245,166,35,.12); border-color: rgba(245,166,35,.4); color: #ffcf87; }
+.banner.CRITICAL { background: rgba(255,92,92,.12); border-color: rgba(255,92,92,.45); color: #ff9d9d; }
+
+.assets { margin: 12px 0 4px; }
+.asset { display: flex; align-items: center; gap: 8px; font-size: 12px; margin: 4px 0; }
+.asset .aname { width: 210px; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.asset .abar-wrap { flex: 1; height: 7px; background: var(--panel-2); border-radius: 4px; overflow: hidden; }
+.asset .abar { display: block; height: 100%; border-radius: 4px; }
+.asset .aval { width: 36px; text-align: right; color: var(--muted); font-family: ui-monospace, monospace; }
