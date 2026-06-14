@@ -6,7 +6,8 @@
   "scripts": {
     "typecheck": "tsc --noEmit",
     "start": "ts-node src/index.ts",
-    "once": "ts-node src/index.ts --once"
+    "once": "ts-node src/index.ts --once",
+    "admin": "ts-node src/admin.ts"
   },
   "dependencies": {
     "@coral-xyz/anchor": "^0.30.1",
