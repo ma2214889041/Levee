@@ -22,7 +22,7 @@ use events::*;
 use state::*;
 
 // Replace after `anchor keys list` / first deploy. Must match Anchor.toml.
-declare_id!("GYMBo4SUqjSCvvN1Bzjmu5MPjFzt47GM3vVDZFM7sUMq");
+declare_id!("DVUNgzdkNY8KvFoyGQAb9MbbSSH6x5D4m2hMGdAGByAv");
 
 #[program]
 pub mod levee {

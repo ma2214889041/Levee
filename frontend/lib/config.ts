@@ -5,7 +5,7 @@ import * as path from "path";
 export const RPC_URL = process.env.RPC_URL || "https://api.devnet.solana.com";
 export const MODEL_API_URL = process.env.MODEL_API_URL || "http://localhost:8000";
 export const PROGRAM_ID =
-  process.env.LEVEE_PROGRAM_ID || "GYMBo4SUqjSCvvN1Bzjmu5MPjFzt47GM3vVDZFM7sUMq";
+  process.env.LEVEE_PROGRAM_ID || "DVUNgzdkNY8KvFoyGQAb9MbbSSH6x5D4m2hMGdAGByAv";
 export const PROGRAM_IDL_PATH =
   process.env.LEVEE_IDL_PATH ||
   path.resolve(process.cwd(), "..", "program", "target", "idl", "levee.json");

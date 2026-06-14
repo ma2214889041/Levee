@@ -1,5 +1,30 @@
 # Deploy
 
+## On-chain (Solana devnet)
+
+The Anchor program is **deployed to Solana devnet**:
+
+| | |
+|---|---|
+| Program ID | `DVUNgzdkNY8KvFoyGQAb9MbbSSH6x5D4m2hMGdAGByAv` |
+| Cluster | devnet |
+| Loader | BPFLoaderUpgradeable |
+| Upgrade authority | `xhuVsoSXhEk5pmiEuhV6CkzRvnYTP5Uzm75JbCJYB2F` |
+| Explorer | https://explorer.solana.com/address/DVUNgzdkNY8KvFoyGQAb9MbbSSH6x5D4m2hMGdAGByAv?cluster=devnet |
+
+`declare_id!` (program/programs/levee/src/lib.rs), `Anchor.toml`, and the client
+defaults (`frontend/lib/config.ts`, `agent/src/config.ts`, `.env.example`) all
+point at this id.
+
+> Built on this machine with the Agave `cargo-build-sbf` 3.1.10 toolchain
+> (`anchor build` forces an old Solana 1.18.17 toolchain that can't compile the
+> 2024-edition deps), then `solana program deploy ... --max-len 371216`.
+> Anchor 0.30.1's IDL generator (`anchor-syn`) does not compile on this 2026
+> toolchain, so the on-chain **IDL is not yet published**; the agent/dashboard
+> clients need it to call the program (generate via a pinned Docker build or an
+> Anchor 1.0 migration). Program init (vault/region/registry) + a live agent run
+> are the next steps once the IDL is available.
+
 Live URLs (Cloudflare Pages):
 
 | App | URL | Source |
