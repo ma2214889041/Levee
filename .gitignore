@@ -6,6 +6,9 @@
 *-keypair.json
 wallet*.json
 id.json
+# npm auth (GitHub Packages token for the 0xbow private SDK) — NEVER commit
+.npmrc
+!.npmrc.example
 
 # ---- Node / TypeScript ----
 node_modules/

@@ -7,13 +7,15 @@
     "shared",
     "agent",
     "oracle",
-    "frontend"
+    "frontend",
+    "privacy"
   ],
   "scripts": {
     "build:shared": "npm run build -w @levee/shared",
     "agent": "npm run start -w @levee/agent",
     "oracle:push": "npm run push -w @levee/oracle",
-    "frontend": "npm run dev -w @levee/frontend"
+    "frontend": "npm run dev -w @levee/frontend",
+    "privacy": "npm run dev -w @levee/privacy"
   },
   "license": "MIT"
 }
