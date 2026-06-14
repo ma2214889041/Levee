@@ -6,12 +6,14 @@
   "workspaces": [
     "shared",
     "agent",
-    "oracle"
+    "oracle",
+    "frontend"
   ],
   "scripts": {
     "build:shared": "npm run build -w @levee/shared",
     "agent": "npm run start -w @levee/agent",
-    "oracle:push": "npm run push -w @levee/oracle"
+    "oracle:push": "npm run push -w @levee/oracle",
+    "frontend": "npm run dev -w @levee/frontend"
   },
   "license": "MIT"
 }

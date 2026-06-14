@@ -11,6 +11,10 @@ id.json
 node_modules/
 dist/
 build/
+
+# ---- Next.js ----
+.next/
+out/
 *.tsbuildinfo
 npm-debug.log*
 yarn-error.log*
