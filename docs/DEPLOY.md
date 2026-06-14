@@ -40,6 +40,25 @@ npx wrangler pages deploy out --project-name=levee --branch=main --commit-dirty=
 export and makes `app/api/state/route.ts` prerender the demo snapshot
 (`lib/demoState.ts`).
 
+### AI on the edge (Cloudflare Pages Function)
+
+`frontend/public/_worker.js` is an advanced-mode Pages Function (copied to
+`out/_worker.js` by the export) that serves the **risk model on Cloudflare's
+edge** — a JS port of `model/app` (calibrated logistic model + alert bands + grid
+exposure + contributing factors). Deployed automatically with the frontend.
+
+```
+GET /api/health
+GET /api/regions
+GET /api/risk?region_id=1[&rain_72h=..&rain_24h=..&rain_3h=..&rain_intensity=..&rain_1h=..]
+GET /api/alerts
+```
+
+Live e.g. https://levee-600.pages.dev/api/risk?region_id=1 . Per-region "current
+conditions" are an illustrative snapshot (no live weather feed on the edge) and
+overridable via query params; the full Python service (`model/`) remains the
+source of truth for training + the live data pipeline.
+
 ## Frontend (live / Node)
 
 For the **real** dashboard (live Solana reads + model risk), run the unmodified

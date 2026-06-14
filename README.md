@@ -13,9 +13,10 @@ human in the critical path, but every action transparent and bounded.
 ## 🔗 Live
 
 - **Landing + dashboard:** https://levee-600.pages.dev (dashboard shows labelled preview data)
+- **Risk model (AI on the edge):** https://levee-600.pages.dev/api/risk?region_id=1 · also `/api/alerts`, `/api/health` — a Cloudflare Pages Function port of the model (`frontend/public/_worker.js`)
 - **Confidential Relief (0xbow Privacy Pools v2):** https://levee-privacy.pages.dev (mock mode)
 
-Both on Cloudflare Pages. Deploy details + live-Node dashboard: [`docs/DEPLOY.md`](docs/DEPLOY.md).
+All on Cloudflare. Deploy details + live-Node dashboard: [`docs/DEPLOY.md`](docs/DEPLOY.md).
 
 ---
 
