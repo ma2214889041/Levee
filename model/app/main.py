@@ -23,6 +23,21 @@ from .regions import all_regions, region_by_id, risk_scale, warning_levels
 from .schemas import AlertsResponse, FeatureIngest, RiskResponse
 from .store import FeatureStore
 
+# Optional Sentry monitoring — only active when SENTRY_DSN is set, so local /
+# CI runs need nothing installed-but-unconfigured to work.
+_SENTRY_DSN = os.environ.get("SENTRY_DSN", "").strip()
+if _SENTRY_DSN:
+    try:
+        import sentry_sdk
+
+        sentry_sdk.init(
+            dsn=_SENTRY_DSN,
+            traces_sample_rate=float(os.environ.get("SENTRY_TRACES_SAMPLE_RATE", "0.1")),
+            environment=os.environ.get("SENTRY_ENV", "devnet"),
+        )
+    except Exception:
+        pass
+
 app = FastAPI(title="Levee Risk API", version="0.1.0")
 
 MODEL = load_or_train()

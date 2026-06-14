@@ -10,8 +10,10 @@ import { getConnection, RPC_URL } from "./config";
 import { getWallet } from "./wallet";
 import { LeveeProgram } from "./program";
 import { runLoop, AgentContext } from "./agent";
+import { initMonitoring } from "./monitor";
 
 async function main() {
+  initMonitoring();
   const once = process.argv.includes("--once");
   const connection = getConnection();
   const { wallet, kind } = getWallet(connection);

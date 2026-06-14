@@ -30,6 +30,7 @@ import { LeveeProgram } from "./program";
 import { fetchRisk, topFactorNote, RiskResult } from "./risk";
 import { updateFeed } from "./oracleUpdate";
 import { requestApproval } from "./hitl";
+import { captureException, addBreadcrumb } from "./monitor";
 import type { AgentWallet } from "./wallet";
 
 const USDC = 10 ** USDC_DECIMALS;
@@ -156,6 +157,7 @@ export async function evaluateRegion(ctx: AgentContext, regionId: number): Promi
   } catch (e) {
     // On-chain fail-closed (e.g. stale oracle, threshold recheck). Record it.
     console.log(`  ✗ execute_payout rejected on-chain: ${(e as Error).message}`);
+    captureException(e, { regionId, payoutUsdc, stage: "execute_payout" });
     await logDecisionSafe(ctx, regionId, risk, false, new BN(0), "payout rejected on-chain");
   }
 }
@@ -170,9 +172,11 @@ export async function runLoop(ctx: AgentContext, once: boolean): Promise<void> {
   while (true) {
     for (const regionId of AGENT_REGIONS) {
       try {
+        addBreadcrumb("evaluate region", { regionId });
         await evaluateRegion(ctx, regionId);
       } catch (e) {
         console.error(`[region ${regionId}] cycle error:`, (e as Error).message);
+        captureException(e, { regionId, stage: "cycle" });
       }
     }
     if (once) break;
