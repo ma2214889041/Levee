@@ -10,30 +10,45 @@ source repo.
 
 ## 1. Configure npm auth
 
-Create `privacy/.npmrc` (this path is git-ignored) from the example:
+> ⚠️ **Workspace caveat (important).** `privacy/` is an npm **workspace** of the
+> repo root, and npm **ignores `.npmrc` files inside a workspace sub-folder**
+> (you'll see `npm warn config ignoring workspace config at …/privacy/.npmrc`).
+> So for a workspace install the auth file must live at the **repo root**, not in
+> `privacy/`. Both locations are git-ignored (`.npmrc` is in `.gitignore`).
+
+**Recommended — repo root (works with workspaces):**
 
 ```bash
-cp .npmrc.example .npmrc
-```
-
-Then put your token in it:
-
-```ini
+# from the repo root
+cat > .npmrc <<'EOF'
 @0xbow-io:registry=https://npm.pkg.github.com
 //npm.pkg.github.com/:_authToken=YOUR_READONLY_TOKEN_HERE
+EOF
 ```
 
-`.npmrc` is in `.gitignore` (`!.npmrc.example` keeps the template) so the token
-never lands in the repo.
+**Alternative — standalone (only if you install `privacy/` on its own, outside
+the workspace):** copy the template and edit it:
+
+```bash
+cd privacy && cp .npmrc.example .npmrc   # then paste your token
+```
+
+`.npmrc` is git-ignored (`!.npmrc.example` keeps the template) so the token
+never lands in the repo. **Never commit a real token.**
 
 ## 2. Install
 
 ```bash
-cd privacy
-npm install @0xbow-io/privacy-pools-v2-sdk@beta
+# from the repo root, install into the privacy workspace:
+npm install @0xbow-io/privacy-pools-v2-sdk@beta -w @levee/privacy
 # pin a version instead:
-# npm install @0xbow-io/privacy-pools-v2-sdk@0.1.0-beta.0
+# npm install @0xbow-io/privacy-pools-v2-sdk@0.1.0-beta.0 -w @levee/privacy
 ```
+
+If you get `401 Unauthorized`, the token has expired/been revoked or lacks
+`read:packages` access — get a fresh one from the 0xbow maintainer (the
+hackathon token expires ~2026-06-18). With no valid token the UI still runs in
+**mock mode** (`npm run dev`), which demos the full UX without the SDK.
 
 ## 3. Activate the real adapter
 
