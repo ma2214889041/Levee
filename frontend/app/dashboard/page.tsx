@@ -32,6 +32,11 @@ export default function Dashboard() {
         <h1>🌊 Levee</h1>
         <span className="tag">Solana · devnet</span>
         <span className="tag">autonomous AI relief agent</span>
+        {state?.demo && (
+          <span className="tag" style={{ color: "var(--amber)", borderColor: "var(--amber)" }}>
+            preview data
+          </span>
+        )}
         <Link href="/" className="tag" style={{ textDecoration: "none" }}>
           ← home
         </Link>

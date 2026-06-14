@@ -10,6 +10,13 @@ landslide probability, a Switchboard oracle carries it on-chain, and a Solana
 program releases pre-funded USDC **only** when the on-chain rules say so — no
 human in the critical path, but every action transparent and bounded.
 
+## 🔗 Live
+
+- **Landing + dashboard:** https://levee-600.pages.dev (dashboard shows labelled preview data)
+- **Confidential Relief (0xbow Privacy Pools v2):** https://levee-privacy.pages.dev (mock mode)
+
+Both on Cloudflare Pages. Deploy details + live-Node dashboard: [`docs/DEPLOY.md`](docs/DEPLOY.md).
+
 ---
 
 ## How it works

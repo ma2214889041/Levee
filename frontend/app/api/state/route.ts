@@ -8,10 +8,17 @@ import {
   getVaultBalanceUsdc,
 } from "@/lib/chain";
 import { captureException } from "@/lib/monitor";
+import { buildDemoState } from "@/lib/demoState";
 
-export const dynamic = "force-dynamic";
+// NEXT_STATIC=1 → this route is prerendered at build time for the static
+// Cloudflare Pages export (which can't run live Solana RPC / the model server),
+// returning an illustrative snapshot. Unset → live, server-rendered each request.
+export const dynamic = process.env.NEXT_STATIC === "1" ? "force-static" : "force-dynamic";
 
 export async function GET() {
+  if (process.env.NEXT_STATIC === "1") {
+    return NextResponse.json(buildDemoState());
+  }
   try {
     const vaultBalanceUsdc = await getVaultBalanceUsdc();
 

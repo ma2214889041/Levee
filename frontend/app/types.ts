@@ -65,4 +65,6 @@ export interface DashboardState {
   vaultBalanceUsdc: number | null;
   regions: RegionState[];
   generatedAt: number;
+  /** True when served from the static (Cloudflare Pages) build — illustrative data. */
+  demo?: boolean;
 }
