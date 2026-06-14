@@ -51,6 +51,10 @@ interface RegionDef {
   slug: string;
   name: string;
   threshold_bps: number;
+  payout_amount_usdc: number;
+  cap_usdc: number;
+  cooldown_seconds: number;
+  static_susceptibility: number;
   [k: string]: unknown;
 }
 const regionsFile = JSON.parse(
