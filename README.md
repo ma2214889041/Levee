@@ -183,6 +183,7 @@ cd privacy && npm install && npm run dev   # http://localhost:5173 (mock mode)
 
 ## Docs
 
+- [`docs/SUBMISSIONS.md`](docs/SUBMISSIONS.md) — per-track submission packet (what proves each bounty + demo scripts).
 - [`docs/DATA.md`](docs/DATA.md) — data, model & early-warning methodology (Terna).
 - [`SECURITY.md`](SECURITY.md) — trust model, on-chain invariants, threat model.
 - [`privacy/INSTALL.md`](privacy/INSTALL.md) — Privacy Pools v2 SDK install.
