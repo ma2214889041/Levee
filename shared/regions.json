@@ -1,6 +1,11 @@
 {
-  "_comment": "Canonical region registry shared by ALL modules (program seeds, model, oracle, agent). region_id is a u16 used as an on-chain PDA seed. Risk values are scaled to BASIS POINTS (0-10000) on-chain; off-chain the model emits a probability in [0,1]. threshold_bps is the ON-CHAIN source of truth committed via initialize_region and is immutable thereafter (see RISK_SCALE).",
+  "_comment": "Canonical region registry shared by ALL modules (program seeds, model, oracle, agent, frontend). region_id is a u16 used as an on-chain PDA seed. Risk values are scaled to BASIS POINTS (0-10000) on-chain; off-chain the model emits a probability in [0,1]. threshold_bps is the ON-CHAIN source of truth and is immutable. warning_levels define the off-chain multi-tier EARLY-WARNING bands for grid operators; the 'critical' band intentionally equals the on-chain payout threshold. grid_assets are National-Transmission-Grid elements (Terna-style) exposed to landslide risk in each area.",
   "RISK_SCALE": 10000,
+  "warning_levels": {
+    "watch": 0.40,
+    "warning": 0.60,
+    "critical": 0.70
+  },
   "regions": [
     {
       "region_id": 1,
@@ -13,7 +18,36 @@
       "payout_amount_usdc": 500,
       "cap_usdc": 10000,
       "cooldown_seconds": 86400,
-      "static_susceptibility": 0.82
+      "static_susceptibility": 0.82,
+      "grid_assets": [
+        {
+          "id": "TR-SAR-380-017",
+          "type": "transmission_tower",
+          "name": "Sarno–Salerno 380kV — tower T17",
+          "lat": 40.812,
+          "lon": 14.615,
+          "voltage_kv": 380,
+          "criticality": 0.95
+        },
+        {
+          "id": "SS-SARNO-150",
+          "type": "substation",
+          "name": "Sarno primary substation",
+          "lat": 40.82,
+          "lon": 14.621,
+          "voltage_kv": 150,
+          "criticality": 0.9
+        },
+        {
+          "id": "TR-SAR-150-042",
+          "type": "transmission_tower",
+          "name": "Sarno–Nocera 150kV — tower T42",
+          "lat": 40.818,
+          "lon": 14.628,
+          "voltage_kv": 150,
+          "criticality": 0.7
+        }
+      ]
     },
     {
       "region_id": 2,
@@ -26,7 +60,27 @@
       "payout_amount_usdc": 500,
       "cap_usdc": 8000,
       "cooldown_seconds": 86400,
-      "static_susceptibility": 0.78
+      "static_susceptibility": 0.78,
+      "grid_assets": [
+        {
+          "id": "TR-QUI-380-088",
+          "type": "transmission_tower",
+          "name": "Quindici–Avellino 380kV — tower T88",
+          "lat": 40.861,
+          "lon": 14.718,
+          "voltage_kv": 380,
+          "criticality": 0.88
+        },
+        {
+          "id": "LN-QUI-150-A",
+          "type": "line_segment",
+          "name": "Quindici–Lauro 150kV — span A",
+          "lat": 40.855,
+          "lon": 14.73,
+          "voltage_kv": 150,
+          "criticality": 0.6
+        }
+      ]
     }
   ]
 }

@@ -31,6 +31,16 @@ def all_regions() -> List[dict]:
     return list(_load()["regions"])
 
 
+def warning_levels() -> Dict[str, float]:
+    """Multi-tier early-warning bands (watch/warning/critical) in [0,1]."""
+    return dict(_load().get("warning_levels", {"watch": 0.4, "warning": 0.6, "critical": 0.7}))
+
+
+def grid_assets(region_id: int) -> List[dict]:
+    """National-Transmission-Grid assets exposed in a region (may be empty)."""
+    return list(region_by_id(region_id).get("grid_assets", []))
+
+
 def region_by_id(region_id: int) -> Dict:
     for r in all_regions():
         if int(r["region_id"]) == int(region_id):

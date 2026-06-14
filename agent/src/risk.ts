@@ -10,6 +10,9 @@ export interface RiskResult {
   risk_bps: number;
   threshold_bps: number;
   would_trigger: boolean;
+  alert_level?: string; // NORMAL | WATCH | WARNING | CRITICAL
+  grid_exposure_score?: number;
+  affected_assets?: { id: string; name: string; asset_risk: number }[];
   contributing_factors: { name: string; label: string; contribution: number }[];
   model: string;
   timestamp: number;
