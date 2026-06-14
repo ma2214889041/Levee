@@ -7,6 +7,8 @@ scikit-learn==1.4.2
 joblib==1.4.2
 requests==2.31.0
 python-dotenv==1.0.1
+# Optional error/performance monitoring (enabled only if SENTRY_DSN is set).
+sentry-sdk[fastapi]==2.7.1
 # Optional: LightGBM is the primary model. If it cannot be installed the code
 # automatically falls back to a calibrated logistic regression.
 lightgbm==4.3.0
