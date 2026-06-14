@@ -56,7 +56,8 @@ human in the critical path, but every action transparent and bounded.
 | `model/`    | Python · LightGBM · FastAPI   | Risk model + `/risk` API + Campania rainfall replay.    |
 | `oracle/`   | TS · Switchboard On-Demand    | Custom feed (pulls `/risk`) + on-demand push scripts.   |
 | `agent/`    | TS · Solana Agent Kit V2 · Privy | Autonomous loop + admin CLI.                         |
-| `frontend/` | Next.js (TS)                  | English dashboard: live risk, on-chain policy, payouts. |
+| `frontend/` | Next.js (TS)                  | English landing page + live ops dashboard.              |
+| `privacy/`  | Vite · React · Privacy Pools v2 | Confidential Relief UI (private + compliant disbursement). |
 | `shared/`   | TS + JSON                     | `regions.json` — single source of truth.                |
 | `scripts/`  | bash                          | Devnet setup + demo orchestration.                      |
 
@@ -167,11 +168,39 @@ the on-chain payout. The model exposes `GET /risk` (now with `alert_level`,
 plus an optional `ALERT_WEBHOOK_URL` push. Full methodology + data assumptions:
 [`docs/DATA.md`](docs/DATA.md).
 
+## Confidential relief (privacy + compliance)
+
+Relief recipients often don't want "I received aid" publicly tied to their
+wallet, yet donors/regulators must verify funds reached legitimate people. The
+[`privacy/`](privacy/) module (Vite + **0xbow Privacy Pools v2**, Sepolia) is the
+last mile: privately split relief to many beneficiaries while each can produce a
+**Proof of Association** that the funds are clean. It ships a working mock and a
+swappable real-SDK adapter — see [`privacy/INSTALL.md`](privacy/INSTALL.md).
+
+```bash
+cd privacy && npm install && npm run dev   # http://localhost:5173 (mock mode)
+```
+
 ## Docs
 
 - [`docs/DATA.md`](docs/DATA.md) — data, model & early-warning methodology (Terna).
 - [`SECURITY.md`](SECURITY.md) — trust model, on-chain invariants, threat model.
+- [`privacy/INSTALL.md`](privacy/INSTALL.md) — Privacy Pools v2 SDK install.
 - Per-module `README.md` in each folder.
+
+## Hackathon track fit (ctrl/shift 2026)
+
+| Track / bounty | How Levee fits |
+|----------------|----------------|
+| **Terna** (landslide risk to the grid) | grid-asset exposure, multi-tier early warning, `/alerts` + webhook, `docs/DATA.md` methodology |
+| **Solana** (AI agents) | autonomous on-chain agent (Agent Kit V2 + Privy) that transacts under on-chain rules |
+| **Blockchain for Good** | transparent, auditable disaster-relief disbursement |
+| **Mood** (innovative AI use case) | calibrated risk model → oracle → autonomous bounded payout |
+| **Main track** | AI × Web3 system that autonomously coordinates value with on-chain trust |
+| **SiteLab** (landing page) | marketing landing at `/` |
+| **Sentry** | optional Sentry monitoring across model, agent, frontend |
+| **Dedaub** (security) | auditable Anchor program + `SECURITY.md` threat model |
+| **0xbow** (Privacy Pools v2) | `privacy/` Confidential Relief UI |
 
 ## Security & limitations (devnet)
 
