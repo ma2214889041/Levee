@@ -1,6 +1,11 @@
-# Levee frontend (Next.js dashboard)
+# Levee frontend (Next.js)
 
-English-language dashboard for Levee. It shows, per monitored region:
+Two routes:
+
+- **`/`** — marketing **landing page** (problem, how-it-works, why, stack, CTA).
+- **`/dashboard`** — live **operations dashboard**.
+
+The dashboard shows, per monitored region:
 
 - **live risk** (from the model `/risk`) with the dominant contributing factors;
 - the **on-chain threshold** (🔒 immutable), payout, cap usage, cooldown, and
