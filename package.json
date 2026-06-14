@@ -1,0 +1,17 @@
+{
+  "name": "levee",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Levee — autonomous AI agent on Solana that monitors landslide risk and auto-disburses USDC relief when on-chain thresholds are crossed.",
+  "workspaces": [
+    "shared",
+    "agent",
+    "oracle"
+  ],
+  "scripts": {
+    "build:shared": "npm run build -w @levee/shared",
+    "agent": "npm run start -w @levee/agent",
+    "oracle:push": "npm run push -w @levee/oracle"
+  },
+  "license": "MIT"
+}

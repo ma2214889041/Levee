@@ -1,0 +1,32 @@
+{
+  "_comment": "Canonical region registry shared by ALL modules (program seeds, model, oracle, agent). region_id is a u16 used as an on-chain PDA seed. Risk values are scaled to BASIS POINTS (0-10000) on-chain; off-chain the model emits a probability in [0,1]. threshold_bps is the ON-CHAIN source of truth committed via initialize_region and is immutable thereafter (see RISK_SCALE).",
+  "RISK_SCALE": 10000,
+  "regions": [
+    {
+      "region_id": 1,
+      "slug": "campania-sarno",
+      "name": "Sarno, Campania (IT)",
+      "description": "Sarno-Quindici area, Campania, Italy. Reference site for the catastrophic May 1998 debris flows. Used for the historical rainfall replay demo.",
+      "lat": 40.815,
+      "lon": 14.62,
+      "threshold_bps": 7000,
+      "payout_amount_usdc": 500,
+      "cap_usdc": 10000,
+      "cooldown_seconds": 86400,
+      "static_susceptibility": 0.82
+    },
+    {
+      "region_id": 2,
+      "slug": "campania-quindici",
+      "name": "Quindici, Campania (IT)",
+      "description": "Quindici municipality, Campania, Italy. Pyroclastic-soil slopes, high landslide susceptibility.",
+      "lat": 40.86,
+      "lon": 14.72,
+      "threshold_bps": 7200,
+      "payout_amount_usdc": 500,
+      "cap_usdc": 8000,
+      "cooldown_seconds": 86400,
+      "static_susceptibility": 0.78
+    }
+  ]
+}
