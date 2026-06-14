@@ -1,0 +1,4 @@
+# Copy to `privacy/.npmrc` (git-ignored) and paste a valid read-only token.
+# Get the token from the 0xbow maintainer. NEVER commit the real token.
+@0xbow-io:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=YOUR_READONLY_TOKEN_HERE
