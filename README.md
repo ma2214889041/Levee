@@ -48,6 +48,20 @@ All web apps on Cloudflare Pages. Deploy details: [`docs/DEPLOY.md`](docs/DEPLOY
 > `program/target/idl/levee.json` exists, the agent + admin CLI wire up unchanged
 > (their configs already point at the deployed program id).
 
+### AI reasoning (Claude)
+
+On top of the calibrated risk model, Levee adds a natural-language reasoning
+layer that turns raw risk numbers into a grid-operator early-warning brief and
+an autonomous-relief decision rationale. **This part uses Claude's capabilities**
+via a **local Claude Code** CLI (`scripts/ai-brief.sh`) — keyless (it uses the
+local login, so no API key is embedded in the deployed app), and the same bridge
+can supply the autonomous agent's decision rationale and on-chain `log_decision`
+notes.
+
+```bash
+./scripts/ai-brief.sh   # live edge risk → Claude reasoning → brief + relief decision
+```
+
 ---
 
 ## How it works
