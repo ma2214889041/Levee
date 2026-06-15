@@ -15,8 +15,32 @@ human in the critical path, but every action transparent and bounded.
 - **Landing + dashboard:** https://levee-600.pages.dev (dashboard shows labelled preview data)
 - **Risk model (AI on the edge):** https://levee-600.pages.dev/api/risk?region_id=1 · also `/api/alerts`, `/api/health` — a Cloudflare Pages Function port of the model (`frontend/public/_worker.js`)
 - **Confidential Relief (0xbow Privacy Pools v2):** https://levee-privacy.pages.dev (mock mode)
+- **Solana program (devnet):** [`DVUNgzdkNY8KvFoyGQAb9MbbSSH6x5D4m2hMGdAGByAv`](https://explorer.solana.com/address/DVUNgzdkNY8KvFoyGQAb9MbbSSH6x5D4m2hMGdAGByAv?cluster=devnet)
 
-All on Cloudflare. Deploy details + live-Node dashboard: [`docs/DEPLOY.md`](docs/DEPLOY.md).
+All web apps on Cloudflare Pages. Deploy details: [`docs/DEPLOY.md`](docs/DEPLOY.md).
+
+### Status
+
+| Piece | Status |
+|---|---|
+| Confidential Relief UI (0xbow) | ✅ live — mock SDK; flip `VITE_USE_REAL_SDK=true` once a valid token is available |
+| Landing page (SiteLab) | ✅ live |
+| Risk model `/risk` · `/alerts` (AI) | ✅ live on the Cloudflare edge (TS port of `model/`) |
+| Solana program | ✅ deployed to devnet (id above) |
+| Dashboard | ✅ live — preview data (real on-chain data needs the program initialized + a Node host) |
+| Autonomous agent ↔ program loop | ⏳ code complete & type-checks; needs the program **IDL** to drive the deployed program |
+
+> **Known build limitation (program IDL).** `program/Cargo.toml` mixes
+> `anchor-lang 0.30.1` (Solana 1.18) with `switchboard-on-demand 0.3.x`
+> (Solana 2.x). This dual-Solana tree has **no single Rust toolchain that builds
+> the host-side IDL in 2026** — an old `rustc` fails on Solana-2.x `edition2024`
+> crates, a new `rustc` fails on Solana-1.18 `ark-ff` macros, and the official
+> `backpackapp/build:v0.30.1` image (rustc 1.79) hits the same wall. The program
+> `.so` builds fine for the SBF target (it is deployed); only the **IDL** is
+> blocked. Fix by reconciling the deps — upgrade to `anchor-lang` 0.31+ so both
+> halves use Solana 2.x, or restore the author's original `Cargo.lock`. Once
+> `program/target/idl/levee.json` exists, the agent + admin CLI wire up unchanged
+> (their configs already point at the deployed program id).
 
 ---
 
