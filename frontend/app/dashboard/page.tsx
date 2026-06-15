@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { DashboardState } from "../types";
 import RegionCard from "../components/RegionCard";
+import SimPanel from "../components/SimPanel";
 
 export default function Dashboard() {
   const [state, setState] = useState<DashboardState | null>(null);
@@ -74,6 +75,8 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
+
+      <SimPanel />
 
       {err && <p className="warn">Failed to load /api/state: {err}</p>}
 

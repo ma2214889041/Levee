@@ -253,3 +253,34 @@ td.amt { text-align: right; font-family: ui-monospace, monospace; }
 @media (prefers-reduced-motion: reduce) {
   .aurora b, .lp-pill .pulse, .lp-ticker-track, .lp-livecard { animation: none; }
 }
+
+/* ── Interactive simulation panel (dashboard) ─────────────────────────── */
+:root { --cyan: #2de5c6; --violet: #8d80ff; --risk: #ff5a52; }
+.sim { background: linear-gradient(180deg, var(--panel), var(--bg));
+  border: 1px solid var(--border); border-radius: 14px; padding: 18px; margin: 4px 0 22px; }
+.sim-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+.sim-title { font-size: 15px; font-weight: 600; color: var(--text); }
+.sim-sub { color: var(--muted); font-size: 12px; margin-top: 3px; }
+.sim-btn { border: 0; cursor: pointer; border-radius: 9px; padding: 9px 16px; font-size: 13px; font-weight: 600;
+  background: linear-gradient(120deg, var(--cyan), #5ff0d8); color: #022019; transition: filter .15s; }
+.sim-btn:hover { filter: brightness(1.08); }
+.sim-btn.ghost { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+.sim-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 18px; margin-top: 16px; }
+@media (max-width: 720px) { .sim-grid { grid-template-columns: 1fr; } }
+.sim-row { display: flex; align-items: baseline; gap: 12px; }
+.sim-clock { color: var(--muted); font-size: 13px; }
+.sim-lvl { font-size: 12px; letter-spacing: .12em; }
+.sim-pct { margin-left: auto; font-size: 26px; font-weight: 600; }
+.sim-gauge { position: relative; height: 12px; border-radius: 6px; background: rgba(255,255,255,.06);
+  overflow: hidden; margin: 10px 0 8px; }
+.sim-fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 6px; transition: width .15s linear, background .3s; }
+.sim-thresh { position: absolute; top: -3px; bottom: -3px; width: 2px; background: #fff;
+  box-shadow: 0 0 6px rgba(255,255,255,.6); }
+.sim-thresh::after { content: "70%"; position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
+  font-size: 9px; color: var(--muted); font-family: ui-monospace, monospace; }
+.sim-cond { color: var(--muted); font-size: 12px; }
+.sim-log { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 12px;
+  min-height: 150px; max-height: 230px; overflow-y: auto; font-size: 12.5px; line-height: 1.5; }
+.sim-ev { display: flex; gap: 10px; padding: 2px 0; animation: simIn .25s ease; }
+.sim-ev-t { color: var(--muted); flex-shrink: 0; }
+@keyframes simIn { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; transform: none; } }
