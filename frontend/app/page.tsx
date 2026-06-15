@@ -76,9 +76,6 @@ export default function Landing() {
                   breaks, USDC streams straight to affected community wallets —{" "}
                   <strong>no committee, no delay, fully auditable.</strong>
                 </p>
-                <p className="lp-lede cn">
-                  实时监测滑坡风险，风险越过链上阈值即自动向受灾社区发放 USDC —— 无需审批、零延迟、全程可审计。
-                </p>
                 <div className="lp-cta">
                   <Link href="/dashboard" className="lp-btn lp-btn-glow lp-btn-lg">
                     Open live dashboard <Arrow />
