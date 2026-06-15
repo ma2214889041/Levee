@@ -36,9 +36,15 @@ All web apps on Cloudflare Pages. Deploy details: [`docs/DEPLOY.md`](docs/DEPLOY
 > the host-side IDL in 2026** — an old `rustc` fails on Solana-2.x `edition2024`
 > crates, a new `rustc` fails on Solana-1.18 `ark-ff` macros, and the official
 > `backpackapp/build:v0.30.1` image (rustc 1.79) hits the same wall. The program
-> `.so` builds fine for the SBF target (it is deployed); only the **IDL** is
-> blocked. Fix by reconciling the deps — upgrade to `anchor-lang` 0.31+ so both
-> halves use Solana 2.x, or restore the author's original `Cargo.lock`. Once
+> `.so` builds fine for the SBF target (it is deployed); only the host-side
+> **IDL** is blocked. Verified exhaustively — rustc 1.79 / 1.85 / 1.89 / 1.96,
+> nightly, the official `backpackapp/build:v0.30.1` Docker image, and an
+> `anchor-lang` 0.31 upgrade (separately blocked: `switchboard-on-demand` 0.3.x
+> is incompatible with `anchor-spl` ≥0.31 / Solana ≥2.2) **all fail**. The
+> requirements have no intersection: `anchor-syn` 0.30 + `ark-ff` 0.4 need rustc
+> ≤~1.80, but the edition2024 crates now ubiquitous on crates.io need ≥1.85. The
+> real fix is the project author's **original pinned `Cargo.lock`**, or migrating
+> the Switchboard integration to a version compatible with a modern anchor. Once
 > `program/target/idl/levee.json` exists, the agent + admin CLI wire up unchanged
 > (their configs already point at the deployed program id).
 
