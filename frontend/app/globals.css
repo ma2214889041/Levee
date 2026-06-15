@@ -284,3 +284,13 @@ td.amt { text-align: right; font-family: ui-monospace, monospace; }
 .sim-ev { display: flex; gap: 10px; padding: 2px 0; animation: simIn .25s ease; }
 .sim-ev-t { color: var(--muted); flex-shrink: 0; }
 @keyframes simIn { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; transform: none; } }
+.sim-ai { margin-top: 16px; border: 1px solid rgba(141,128,255,.35); border-radius: 12px;
+  background: linear-gradient(180deg, rgba(141,128,255,.08), rgba(141,128,255,.02)); padding: 14px 16px; }
+.sim-ai-h { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.sim-ai-badge { font-size: 11px; font-weight: 700; letter-spacing: .04em; color: #022019;
+  background: linear-gradient(120deg, var(--violet), #b3a9ff); padding: 3px 10px; border-radius: 20px; }
+.sim-ai-note { font-size: 11px; color: var(--muted); }
+.sim-ai-body { margin: 0; font-size: 13.5px; line-height: 1.6; color: var(--text); }
+.sim-caret { display: inline-block; width: 7px; height: 15px; margin-left: 2px; vertical-align: -2px;
+  background: var(--violet); animation: simBlink 1s steps(2) infinite; }
+@keyframes simBlink { 0%,50% { opacity: 1; } 50.01%,100% { opacity: 0; } }
