@@ -62,6 +62,21 @@ notes.
 ./scripts/ai-brief.sh   # live edge risk → Claude reasoning → brief + relief decision
 ```
 
+**News cross-validation (corroboration layer).** A parametric trigger should
+never fire on a single signal. `scripts/ai-verify.sh` takes the live risk and
+asks the local Claude Code CLI to **independently web-search public news,
+civil-protection bulletins, and weather reports** for each at-risk region, then
+judge whether real-world reporting **corroborates, leaves unconfirmed, or
+contradicts** the model's signal. The intended policy: a payout proceeds only
+when the on-chain threshold is crossed **and** the signal is corroborated; an
+unconfirmed signal is flagged for human-in-the-loop, and a contradicted region
+is never approved. This adds a second, independent confirmation on top of the
+sensor-driven model — also keyless, via the local CLI's own login and web tool.
+
+```bash
+./scripts/ai-verify.sh   # live edge risk → Claude web-searches news → corroborate / hold
+```
+
 ---
 
 ## How it works
